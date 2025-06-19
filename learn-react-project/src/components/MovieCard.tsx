@@ -1,12 +1,23 @@
 import Card from 'react-bootstrap/Card';
 import type { Movie } from '../models/Movie';
 import '../assets/css/MovieCard.css';
+import { useFavorites } from '../context/FavoritesContext';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 interface Props {
     movie : Movie
 }
 
 function MovieCard({movie} : Props) {
+    const { addFavorite, removeFavorite, isFavorite } = useFavorites();
+
+    const toggleFavorite = () => {
+        if (isFavorite(movie.id)) {
+            removeFavorite(movie.id);
+        } else {
+            addFavorite(movie);
+        }
+        };    
 
     return (
     <Card style={{ width: '18rem', height: '36.5rem', display: 'flex', flexDirection: 'column' }}>
@@ -25,8 +36,13 @@ function MovieCard({movie} : Props) {
 
         <Card.Text className='movie-card__overview' title={movie.overview}>{movie.overview}</Card.Text>
       </Card.Body>
-      <Card.Footer style={{ fontSize: '0.85rem' }}>
-        Release Date: {movie.release_date || 'Not Specified'}
+      <Card.Footer className="d-flex justify-content-between align-items-center">
+        <span>Release: {movie.release_date || 'N/A'}</span>
+        <i onClick={toggleFavorite}
+        style={{ cursor: 'pointer', color: isFavorite(movie.id) ? 'red' : 'black' }}
+        >
+        {isFavorite(movie.id) ? <FaHeart /> : <FaRegHeart />}
+        </i>
       </Card.Footer>
     </Card>
   );

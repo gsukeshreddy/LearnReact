@@ -24,6 +24,14 @@ const handleSearch = (e: React.FormEvent) => {
   navigate(`${location.pathname}?${params.toString()}`);
 };
 
+const handleClearSearch = () => {
+  setQuery('');
+  const params = new URLSearchParams(location.search);
+  params.delete("searchTerm");
+
+  navigate(`${location.pathname}?${params.toString()}`);
+};
+
     return <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid px-3">
@@ -40,20 +48,31 @@ const handleSearch = (e: React.FormEvent) => {
             </li>))}
     </ul>
   </div>
-  <Form onSubmit={handleSearch}>
+<Form onSubmit={handleSearch}>
   <Row className="align-items-center">
-    <Col xs="auto">
-      <Form.Control
+    <Col xs="auto" className="position-relative">
+    <Form.Control
         type="text"
         placeholder="Search Movies"
-        className="me-sm-2"  // use 'me-sm-2' (margin-end) instead of 'mr-sm-2' for Bootstrap 5
+        className="me-sm-2 pe-5" // pe-5 adds padding-end so the X doesn't overlap text
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-      />
-    </Col>
-    <Col xs="auto">
-      <Button type="submit" variant="outline-primary">Search</Button>
-    </Col>
+        />
+        {query && (
+            <button
+                type="button"
+                onClick={handleClearSearch}
+                className="position-absolute end-0 top-50 translate-middle-y me-4 p-0 border-0 bg-transparent"
+                style={{ fontSize: '1.2rem', lineHeight: 1, color: '#888', cursor: 'pointer' }}
+                aria-label="Clear search"
+                >
+                X
+            </button>
+        )}
+        </Col>
+        <Col xs="auto">
+        <Button type="submit" variant="outline-primary">Search</Button>
+        </Col>
   </Row>
 </Form>
 </div>
