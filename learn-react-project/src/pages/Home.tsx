@@ -21,10 +21,8 @@ function Home() {
         const results = query ? await searchMovies(query) 
                                 : await getPopularMovies();
         setMovies(results);
-        console.log(results);
       } catch (err) {
-        console.log(err);
-        setError(`Failed to load movies...`);
+        setError(`Failed to load movies...${err}`);
       } finally {
         setLoading(false);
       }
