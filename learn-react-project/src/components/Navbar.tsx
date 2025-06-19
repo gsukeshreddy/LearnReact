@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar() {  
   const [selectedIndex, setSelectedIndex] = useState(0);
   const menuItems : string[] = ['Home', 'Favorites', 'About'];
   const [query, setQuery] = useState('');
   const location = useLocation();
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const index = menuItems.findIndex(item =>
+        location.pathname.toLowerCase().includes(item.toLowerCase())
+    );
+    setSelectedIndex(index === -1 ? 0 : index);
+  }, [location.pathname]);
 
 const handleSearch = (e: React.FormEvent) => {
   e.preventDefault();
@@ -35,18 +42,24 @@ const handleClearSearch = () => {
     return <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid px-3">
-  <a className="navbar-brand" href="#">Movies React</a>
+  <a className="navbar-brand" href="#" style={{color: "dodgerblue" }}>Movies React</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
 
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul className="navbar-nav mr-auto">
-        {menuItems.map((item, index) => 
-            (<li key={index} className={selectedIndex === index ? "nav-item active" : "nav-item" }>
-            <Link className="nav-link" to={`/${item.toLowerCase()}`} onClick={() => setSelectedIndex(index)}>{item}</Link>
-            </li>))}
-    </ul>
+    <ul className="navbar-nav me-auto">  {/* use me-auto for Bootstrap 5 */}
+  {menuItems.map((item, index) => (
+    <li key={index} className={`nav-item ${selectedIndex === index ? 'fw-bold' : ''}`}>
+      <Link className={`nav-link ${selectedIndex === index ? 'active' : ''}`}
+        to={`/${item.toLowerCase()}`}
+        onClick={() => setSelectedIndex(index)}
+      >
+        {item}
+      </Link>
+    </li>
+  ))}
+</ul>
   </div>
 <Form onSubmit={handleSearch}>
   <Row className="align-items-center">
