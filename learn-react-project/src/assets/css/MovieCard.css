@@ -1,7 +1,8 @@
 .movie-card__overview {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-height: 4.5rem;       /* fixed height */
+  overflow-y: auto;         /* vertical scrollbar if needed */
+  overflow-x: hidden;       /* hide horizontal scrollbar */
+  white-space: normal;      /* allow line wrap */
+  word-break: break-word;   /* break long words */
+  padding-right: 0.5rem;    /* add some right padding so scrollbar doesn't overlap text */
 }
