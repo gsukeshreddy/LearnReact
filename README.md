@@ -4,4 +4,5 @@ A simple Movies App built using React.
 
 ## Preview
 
-![React Movies App Screenshot](./assets/ReactMovie.png)
+![React Movies App Screenshot](./learn-react-project/src/assets/ReactMovie.png)
+
