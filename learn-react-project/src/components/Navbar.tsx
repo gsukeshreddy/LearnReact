@@ -15,7 +15,7 @@ function Navbar() {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
         {menuItems.map((item, index) => 
-            (<li className={selectedIndex === index ? "nav-item active" : "nav-item" }>
+            (<li key={index} className={selectedIndex === index ? "nav-item active" : "nav-item" }>
             <Link className="nav-link" to={`/${item.toLowerCase()}`} onClick={() => setSelectedIndex(index)}>{item}</Link>
             </li>))}
     </ul>
