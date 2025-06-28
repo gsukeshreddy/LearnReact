@@ -1,7 +1,7 @@
 
 services:
   react-frontend:
-    container_name: react-frontend
+    container_name: movie-flix
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -9,3 +9,6 @@ services:
       - "5173:5173"  # ✅ Vite dev server port
     stdin_open: true
     tty: true
+    volumes:
+      - .:/app                     # Mount project source code
+      - /app/node_modules          # Prevent node_modules from being overwritten
