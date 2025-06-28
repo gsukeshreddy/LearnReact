@@ -1,0 +1,16 @@
+# Dockerfile.dev
+
+FROM --platform=linux/amd64 node:24.2.0
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# Expose Vite default port
+EXPOSE 5173
+
+# Start dev server with hot reload
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
