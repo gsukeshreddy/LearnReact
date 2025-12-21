@@ -17,7 +17,7 @@ This will:
 
 Access the app at: http://localhost
 
-### 2. Building from Local Source (Development)
+### 2. Building from Local Source (Testing)
 
 Use docker-compose.local.yml to build from your local code:
 
@@ -32,7 +32,22 @@ This will:
 
 Access the app at: http://localhost
 
-### 3. Switching Between Modes
+### 3. Development with Hot Reload (Development)
+
+Use docker-compose.dev.yml for development with volume mounts and hot-reload:
+
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
+
+This will:
+- Mount source code as volumes for live code changes
+- Use development servers (Vite dev server for frontend)
+- Enable hot-reload without rebuilding containers
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5051
+
+### 4. Switching Between Modes
 
 **To use local builds in docker-compose.yml:**
 Uncomment the `build:` sections and comment out the `image:` lines.
@@ -46,6 +61,7 @@ The GitHub Actions pipeline automatically:
 - Builds Docker images on push to main/develop
 - Pushes to Docker Hub with multiple tags
 - Supports semantic versioning (e.g., v1.0.0)
+- Builds for multiple platforms (amd64, arm64)
 
 ## Secrets Required
 

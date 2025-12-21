@@ -1,0 +1,46 @@
+services:
+  backend:
+    # Build from local source with hot-reload
+    build:
+      context: ./Movieflix-Backend
+      dockerfile: Dockerfile.dev
+    container_name: movieflix-backend-dev
+    ports:
+      - "5051:5051"
+    expose:
+      - "5051"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5051
+    volumes:
+      # Mount source code for hot-reload
+      - ./Movieflix-Backend:/app:rw
+      # Exclude bin and obj directories
+      - /app/bin
+      - /app/obj
+    networks:
+      - movieflix-net
+
+  frontend:
+    # Build from local source with hot-reload
+    build:
+      context: ./Movieflix-Frontend
+      dockerfile: Dockerfile.dev
+    container_name: movieflix-frontend-dev
+    ports:
+      - "5173:5173"    # Vite dev server port
+    environment:
+      - VITE_BASE_URL=http://localhost:5051/api
+    volumes:
+      # Mount source code for hot-reload
+      - ./Movieflix-Frontend:/app:rw
+      # Exclude node_modules
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - movieflix-net
+
+networks:
+  movieflix-net:
+    driver: bridge
