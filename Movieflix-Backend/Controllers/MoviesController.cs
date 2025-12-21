@@ -19,17 +19,39 @@ namespace Movieflix_Backend.Controllers
         [HttpGet("popular")]
         public async Task<IActionResult> GetPopularMovies()
         {
-            var response = await _httpClient.GetAsync($"{_config.BaseUrl}/movie/popular?api_key={_config.ApiKey}");
-            var json = await response.Content.ReadAsStringAsync();
-            return Content(json, "application/json");
+            try
+            {
+                var response = await _httpClient.GetAsync($"{_config.BaseUrl}/movie/popular?api_key={_config.ApiKey}");
+                var json = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(json))
+                {
+                    return Content("{\"results\":[],\"error\":\"Failed to fetch movies\"}", "application/json");
+                }
+                return Content(json, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return Content($"{{\"results\":[],\"error\":\"{ex.Message}\"}}", "application/json");
+            }
         }
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchMovies([FromQuery] string query)
         {
-            var response = await _httpClient.GetAsync($"{_config.BaseUrl}/search/movie?api_key={_config.ApiKey}&query={query}");
-            var json = await response.Content.ReadAsStringAsync();
-            return Content(json, "application/json");
+            try
+            {
+                var response = await _httpClient.GetAsync($"{_config.BaseUrl}/search/movie?api_key={_config.ApiKey}&query={query}");
+                var json = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode || string.IsNullOrWhiteSpace(json))
+                {
+                    return Content("{\"results\":[],\"error\":\"Failed to search movies\"}", "application/json");
+                }
+                return Content(json, "application/json");
+            }
+            catch (Exception ex)
+            {
+                return Content($"{{\"results\":[],\"error\":\"{ex.Message}\"}}", "application/json");
+            }
         }
     }
 }
