@@ -1,9 +1,12 @@
 
 services:
   backend:
-    build:
-      context: ./Movieflix-Backend
-      dockerfile: Dockerfile
+    # Use pre-built image from Docker Hub
+    image: gsukeshreddy13/movieflix-backend:latest
+    # Uncomment below to build from local source instead
+    # build:
+    #   context: ./Movieflix-Backend
+    #   dockerfile: Dockerfile
     container_name: movieflix-backend
     ports:
       - "5051:5051"    # HTTP port for backend API
@@ -16,14 +19,15 @@ services:
       - movieflix-net
 
   frontend:
-    build:
-      context: ./learn-react-project
-      dockerfile: Dockerfile.dev
+    # Use pre-built image from Docker Hub
+    image: gsukeshreddy13/movieflix-frontend:latest
+    # Uncomment below to build from local source instead
+    # build:
+    #   context: ./learn-react-project
+    #   dockerfile: Dockerfile
     container_name: movieflix-frontend
     ports:
-      - "5173:5173"    # Vite dev server port
-    environment:
-      - VITE_BASE_URL=http://localhost:5051/api   # Backend container hostname & port
+      - "80:80"    # NGINX serves on port 80
     depends_on:
       - backend
     networks:

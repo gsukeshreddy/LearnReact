@@ -13,6 +13,11 @@ RUN npm install
 # Copies the entire React app source code (everything in the current directory) into the container.
 COPY . .
 
+# Set build-time environment variable for API URL
+# Frontend will use /api which NGINX will proxy to backend container
+ARG VITE_BASE_URL=/api
+ENV VITE_BASE_URL=$VITE_BASE_URL
+
 # Runs the React build script (react-scripts build), creating static files in /app/build.
 RUN npm run build
 
@@ -23,10 +28,10 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy React build files to NGINX public folder
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy custom nginx config (optional)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx config to proxy API requests to backend
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

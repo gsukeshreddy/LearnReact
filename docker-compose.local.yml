@@ -1,0 +1,33 @@
+services:
+  backend:
+    # Build from local source
+    build:
+      context: ./Movieflix-Backend
+      dockerfile: Dockerfile
+    container_name: movieflix-backend-local
+    ports:
+      - "5051:5051"
+    expose:
+      - "5051"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5051
+    networks:
+      - movieflix-net
+
+  frontend:
+    # Build from local source
+    build:
+      context: ./learn-react-project
+      dockerfile: Dockerfile
+    container_name: movieflix-frontend-local
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - movieflix-net
+
+networks:
+  movieflix-net:
+    driver: bridge
