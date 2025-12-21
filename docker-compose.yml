@@ -23,7 +23,7 @@ services:
     image: gsukeshreddy13/movieflix-frontend:latest
     # Uncomment below to build from local source instead
     # build:
-    #   context: ./learn-react-project
+    #   context: ./Movieflix-Frontend
     #   dockerfile: Dockerfile
     container_name: movieflix-frontend
     ports:

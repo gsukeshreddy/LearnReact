@@ -18,7 +18,7 @@ services:
   frontend:
     # Build from local source
     build:
-      context: ./learn-react-project
+      context: ./Movieflix-Frontend
       dockerfile: Dockerfile
     container_name: movieflix-frontend-local
     ports:

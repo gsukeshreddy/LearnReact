@@ -26,7 +26,7 @@ docker-compose -f docker-compose.local.yml up --build
 ```
 
 This will:
-- Build frontend from `./learn-react-project`
+- Build frontend from `./Movieflix-Frontend`
 - Build backend from `./Movieflix-Backend`
 - Start both containers
 

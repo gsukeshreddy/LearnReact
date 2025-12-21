@@ -53,8 +53,8 @@ jobs:
       - name: Build and push Frontend Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./learn-react-project
-          file: ./learn-react-project/Dockerfile
+          context: ./Movieflix-Frontend
+          file: ./Movieflix-Frontend/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
